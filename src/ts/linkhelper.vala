@@ -24,61 +24,61 @@
 public class Valadoc.ValadocOrgLinkHelper : Valadoc.Html.LinkHelper {
 	public override string? get_package_link (Api.Package package, Settings settings) {
 		string res = Path.build_filename ("/", package.name, "index.htm");
-		stdout.printf ("  get_package_link: " + res + "\n");
+		// stdout.printf ("  get_package_link: " + res + "\n");
 		return res;
 	}
 
 	protected override string? from_package_to_package (Api.Package from, Api.Package to) {
 		string res = Path.build_filename ("/", to.name + "index.htm");
-		stdout.printf (" from_package_to_package: "+ res + "\n");
+		// stdout.printf (" from_package_to_package: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_package_to_wiki (Api.Package from, WikiPage to) {
 		string res = Path.build_filename ("/", _settings.pkg_name, translate_wiki_name (to));
-		stdout.printf (" from_package_to_wiki: "+ res + "\n");
+		// stdout.printf (" from_package_to_wiki: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_package_to_node (Api.Package from, Api.Node to) {
 		string res = Path.build_filename ("/", to.package.name, to.get_full_name () + ".html");
-		stdout.printf (" from_package_to_node: "+ res + "\n");
+		// stdout.printf (" from_package_to_node: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_wiki_to_package (WikiPage from, Api.Package to) {
 		string res = Path.build_filename ("/", to.name, "index.htm");
-		stdout.printf (" from_wiki_to_package: "+ res + "\n");
+		// stdout.printf (" from_wiki_to_package: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_wiki_to_wiki (WikiPage from, WikiPage to) {
 		string res = Path.build_filename ("/", _settings.pkg_name, translate_wiki_name (to));
-		stdout.printf (" from_wiki_to_wiki: "+ res + "\n");
+		// stdout.printf (" from_wiki_to_wiki: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_wiki_to_node (WikiPage from, Api.Node to) {
 		string res = Path.build_filename ("/", to.package.name, to.get_full_name () + ".html");
-		stdout.printf (" from_wiki_to_node: "+ res + "\n");
+		// stdout.printf (" from_wiki_to_node: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_node_to_package (Api.Node from, Api.Package to) {
 		string res = Path.build_filename ("/", to.name, "index.htm");
-		stdout.printf (" from_node_to_package: "+ res + "\n");
+		// stdout.printf (" from_node_to_package: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_node_to_wiki (Api.Node from, WikiPage to) {
 		string res = Path.build_filename ("/", _settings.pkg_name, translate_wiki_name (to));
-		stdout.printf (" from_node_to_wiki: "+ res + "\n");
+		// stdout.printf (" from_node_to_wiki: "+ res + "\n");
 		return res;
 	}
 
 	protected override string? from_node_to_node (Api.Node from, Api.Node to) {
 		string res = Path.build_filename ("/", to.package.name, to.get_full_name() + ".html");
-		stdout.printf (" from_node_to_node: "+ res + "\n");
+		// stdout.printf (" from_node_to_node: "+ res + "\n");
 		return res;
 	}
  }

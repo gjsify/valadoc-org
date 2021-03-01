@@ -190,3 +190,21 @@ Contact And Help
 - [Issue Tracker, valadoc (now a part of Vala)](https://gitlab.gnome.org/GNOME/vala/issues)
 - IRC: irc.gnome.org, #vala (flo, UTC+01:00)
 - Mail: flo.brosch@gmail.com
+
+
+## Notes
+
+### VSCode
+
+https://github.com/benwaffle/vala-language-server
+https://marketplace.visualstudio.com/items?itemName=prince781.vala
+
+### Valadoc
+
+```
+valadoc --target-glib 2.98 --importdir girs --doclet "." -o "tmp/glib-2.0" "/usr/share/vala-0.48/vapi/glib-2.0.vapi" --vapidir "/usr/share/vala-0.48/vapi" --girdir "girs/gir-1.0" --pkg posix --use-svg-images -X --disable-devhelp --importdir documentation/glib-2.0 --import glib-2.0 --importdir "girs/gir-1.0" --import GLib-2.0 --metadatadir documentation/glib-2.0 --importdir examples --import glib-2.0-examples --wiki documentation/glib-2.0/wiki
+
+valadoc --target-glib 2.98 --importdir girs --doclet "." -o "tmp/gio-2.0" "/usr/share/vala-0.48/vapi/gio-2.0.vapi" --vapidir "/usr/share/vala-0.48/vapi" --girdir "girs/gir-1.0"  --use-svg-images -X --disable-devhelp --importdir "girs/gir-1.0" --import Gio-2.0 --metadatadir documentation/gio-2.0 --importdir examples --import gio-2.0-examples --wiki documentation/gio-2.0/wiki
+
+valadoc --target-glib 2.98 --importdir girs --doclet "." -o "tmp/gobject-2.0" "/usr/share/vala-0.48/vapi/gobject-2.0.vapi" --vapidir "/usr/share/vala-0.48/vapi" --girdir "girs/gir-1.0"  --use-svg-images -X --disable-devhelp --importdir "girs/gir-1.0" --import GObject-2.0 --metadatadir documentation/gobject-2.0 --importdir examples --import gobject-2.0-examples --wiki documentation/gobject-2.0/wiki
+```

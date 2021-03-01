@@ -9,7 +9,9 @@
     "test": "stylelint data/styles/*.css",
     "build": "gulp",
     "start": "php -S localhost:7777 -t ./valadoc.org ./router.php",
-    "lint": "eslint data/scripts/*.js"
+    "lint": "eslint data/scripts/*.js",
+    "doc": "make -f Makefile.typescript libdoclet.so && rm -rf ts && valadoc --verbose --target-glib 2.98 --importdir girs --doclet \".\" -o \"ts/gio-2.0\" \"/usr/share/vala-0.48/vapi/gio-2.0.vapi\" --vapidir \"/usr/share/vala-0.48/vapi\" --girdir \"girs/gir-1.0\"  --use-svg-images -X --disable-devhelp --importdir \"girs/gir-1.0\" --import Gio-2.0",
+    "doc:gtk": "make -f Makefile.typescript libdoclet.so && rm -rf ts && valadoc --verbose --target-glib 2.98 --importdir girs --doclet \".\" -o \"ts/gtk-3.0\" \"/usr/share/vala-0.48/vapi/gtk+-3.0.vapi\" --vapidir \"/usr/share/vala-0.48/vapi\" --girdir \"girs/gir-1.0\"  --use-svg-images -X --disable-devhelp --importdir \"girs/gir-1.0\" --import Gtk-3.0"
   },
   "dependencies": {
     "@babel/core": "^7.12.3",

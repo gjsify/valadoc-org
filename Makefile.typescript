@@ -42,7 +42,7 @@ DOCLET_DEPS = gee-0.8 valadoc-$(VALAC_VERSION)
 DOCLET_VALAFLAGS := $(patsubst %,--pkg=%,$(DOCLET_DEPS))
 DOCLET_CFLAGS := $(shell pkg-config --cflags --libs $(DOCLET_DEPS)) -shared -fPIC -w
 
-libdoclet.so: src/ts/doclet.vala src/ts/linkhelper.vala
+libdoclet.so: src/ts/doclet.vala src/ts/generator.vala src/ts/linkhelper.vala src/ts/utils.vala
 	$(VALAC) $(VALAFLAGS) $(DOCLET_VALAFLAGS) -C $^
 	$(CC) $(DOCLET_CFLAGS) -o $@ $(patsubst %.vala,%.c,$^)
 	$(RM) $(patsubst %.vala,%.c,$^)
