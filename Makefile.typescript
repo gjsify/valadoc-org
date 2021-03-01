@@ -6,7 +6,7 @@ VAPIDIR := $(shell pkg-config --variable vapidir libvala-$(VALAC_VERSION))
 VALAFLAGS = -g -X -w
 PREFIX = "stable"
 
-default: generator libdoclet.so update-girs configgen valadoc-example-gen valadoc-example-tester
+default: generator libdoclet.so update-girs valadoc-example-gen valadoc-example-tester
 
 datadir := $(shell dirname $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)))
 
@@ -23,7 +23,6 @@ clean:
 	$(RM) -r sphinx/storage
 	$(RM) valadoc-example-tester
 	$(RM) valadoc-example-gen
-	$(RM) configgen
 	$(RM) generator
 	$(RM) -r extra-vapis
 	$(RM) -r girs
@@ -43,7 +42,7 @@ DOCLET_DEPS = gee-0.8 valadoc-$(VALAC_VERSION)
 DOCLET_VALAFLAGS := $(patsubst %,--pkg=%,$(DOCLET_DEPS))
 DOCLET_CFLAGS := $(shell pkg-config --cflags --libs $(DOCLET_DEPS)) -shared -fPIC -w
 
-libdoclet.so: src/doclet.vala src/linkhelper.vala
+libdoclet.so: src/ts/doclet.vala src/ts/linkhelper.vala
 	$(VALAC) $(VALAFLAGS) $(DOCLET_VALAFLAGS) -C $^
 	$(CC) $(DOCLET_CFLAGS) -o $@ $(patsubst %.vala,%.c,$^)
 	$(RM) $(patsubst %.vala,%.c,$^)
@@ -52,12 +51,8 @@ libdoclet.so: src/doclet.vala src/linkhelper.vala
 GENERATOR_DEPS = gee-0.8 valadoc-$(VALAC_VERSION) gio-2.0
 GENERATOR_VALAFLAGS := $(patsubst %,--pkg=%,$(GENERATOR_DEPS)) --enable-experimental
 
-generator: src/doclet.vala src/linkhelper.vala src/generator.vala
+generator: src/ts/doclet.vala src/ts/linkhelper.vala src/ts/generator.vala
 	$(VALAC) $(VALAFLAGS) $(GENERATOR_VALAFLAGS) -o $@ $^
-
-
-configgen: src/configgen.vala
-	$(VALAC) $(VALAFLAGS) -o $@ $^ -X -D -X datadir=\"$(datadir)\" --vapidir src/ --pkg config --enable-experimental
 
 
 update-girs:
@@ -114,7 +109,7 @@ build-docs: default
 		$(PACKAGES)
 
 build-docs-mini: default
-	make build-docs PACKAGES="glib-2.0 gio-2.0 gobject-2.0"
+	make -f Makefile.typescript build-docs PACKAGES="glib-2.0 gio-2.0 gobject-2.0" GENERATOR_OPTS="--disable-devhelp"
 
 test-examples: valadoc-example-tester
 	$(RM) -r tmp/
@@ -122,18 +117,12 @@ test-examples: valadoc-example-tester
 
 
 #
-# Run a local webserver serving valadoc.org
+# Run a local webserver serving typescript
 #
 
 
 serve: build-docs build-data
-	FWD_SEARCH=1 FWD_TOOLTIP=1 php -S localhost:7777 -t ./valadoc.org $(PWD)/valadoc.org/router.php
+	FWD_SEARCH=1 FWD_TOOLTIP=1 php -S localhost:7777 -t ./typescript $(PWD)/typescript/router.php
 
 serve-mini: build-docs-mini build-data
-	FWD_SEARCH=1 FWD_TOOLTIP=1 php -S localhost:7777 -t ./valadoc.org $(PWD)/valadoc.org/router.php
-
-serve-search: configgen
-	./configgen ./valadoc.org/
-	mkdir ./sphinx/storage
-	indexer --config ./sphinx.conf --all
-	searchd --config sphinx.conf
+	FWD_SEARCH=1 FWD_TOOLTIP=1 php -S localhost:7777 -t ./typescript $(PWD)/typescript/router.php
